@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ved Mogili | Portfolio</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    :root {
+        --bg-color: #000000;
+        --card-bg: #151515;
+        --accent: #22d3ee;
+        --accent-glow: rgba(34, 211, 238, 0.4);
+        --text-main: #ffffff;
+        --text-sub: #a3a3a3;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        min-height: 100vh;
+        padding-bottom: 60px;
+    }
+
+    .container {
+        max-width: 550px;
+        margin: 0 auto;
+        padding: 20px;
+        perspective: 1000px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+
+    @keyframes knobPop {
+        from { transform: translate(-50%, -50%) scale(0.6); opacity: 0; }
+        to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+
+    .profile-header {
+        text-align: center;
+        margin: 40px 0 30px;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    .img-wrap {
+        position: relative;
+        width: 140px;
+        height: 140px;
+        margin: 0 auto 15px;
+        border-radius: 50%;
+        padding: 5px;
+        background: linear-gradient(45deg, #000000, var(--accent));
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .profile-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--card-bg);
+        transition: transform 0.4s;
+    }
+
+    .img-wrap:hover .profile-img {
+        transform: scale(1.05);
+    }
+
+    h1 {
+        font-size: 2.2rem;
+        margin-bottom: 5px;
+    }
+
+    .tagline {
+        color: var(--accent);
+        font-weight: 600;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+
+    .hello-chip {
+        margin-top: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: #000;
+        border: 1px solid #262626;
+        font-size: 0.8rem;
+    }
+
+    .hello-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    #hello-text {
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 2px solid rgba(255,255,255,0.6);
+    }
+
+    .social-row {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 40px;
+        animation: fadeIn 1s ease-out;
+    }
+
+    .social-icon {
+        color: var(--text-sub);
+        font-size: 1.5rem;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .social-icon:hover {
+        color: var(--accent);
+        transform: translateY(-5px) scale(1.2);
+        text-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .card {
+        background-color: var(--card-bg);
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 30px -10px rgba(0,0,0,0.7);
+        border: 1px solid rgba(255,255,255,0.03);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        animation: fadeIn 0.8s ease-out backwards;
+    }
+
+    .card:nth-of-type(1) { animation-delay: 0.1s; }
+    .card:nth-of-type(2) { animation-delay: 0.2s; }
+    .card:nth-of-type(3) { animation-delay: 0.3s; }
+    .card:nth-of-type(4) { animation-delay: 0.4s; }
+    .card:nth-of-type(5) { animation-delay: 0.5s; }
+
+    .card:hover {
+        box-shadow: 0 15px 35px -10px var(--accent-glow);
+        border-color: var(--accent);
+    }
+
+    .section-header {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--text-sub);
+        margin-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 10px;
+    }
+
+    .card p {
+        color: var(--text-sub);
+        line-height: 1.6;
+        font-size: 0.9rem;
+    }
+
+    /* quick stats strip */
+    .stats-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 18px;
+    }
+
+    .stat-pill {
+        flex: 1;
+        background: #101010;
+        border-radius: 10px;
+        padding: 8px 10px;
+        text-align: center;
+        border: 1px solid #262626;
+        font-size: 0.75rem;
+    }
+
+    .stat-pill span {
+        display: block;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--accent);
+    }
+
+    /* --- TECH STACK SLIDER --- */
+    .skills-slider-list {
+        margin-top: 5px;
+    }
+
+    .skill-slider {
+        margin-bottom: 18px;
+        --level: 90;
+    }
+
+    .skill-title {
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--text-main);
+        margin-bottom: 6px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .skill-title span.skill-percent {
+        color: var(--text-sub);
+        font-size: 0.75rem;
+    }
+
+    .slider-track {
+        position: relative;
+        width: 100%;
+        height: 3px;
+        border-radius: 999px;
+        background: #333333;
+        overflow: visible;
+    }
+
+    .slider-fill {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 0%;
+        background: var(--accent);
+        border-radius: inherit;
+        transform-origin: left;
+    }
+
+    .slider-knob {
+        position: absolute;
+        left: 0%;
+        top: 50%;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #000000;
+        border: 3px solid var(--accent);
+        box-shadow: 0 0 12px var(--accent-glow);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        animation: knobPop 0.35s ease-out forwards;
+    }
+
+    .project {
+        margin-bottom: 25px;
+        padding-left: 15px;
+        border-left: 2px solid var(--text-sub);
+        transition: 0.3s;
+    }
+
+    .project:last-child { margin-bottom: 0; }
+
+    .project:hover {
+        border-left-color: var(--accent);
+        padding-left: 20px;
+    }
+
+    .project h3 {
+        font-size: 1.1rem;
+        color: var(--text-main);
+    }
+
+    .project span {
+        font-size: 0.8rem;
+        color: var(--accent);
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .project p {
+        font-size: 0.9rem;
+        color: var(--text-sub);
+    }
+
+    .hobby-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .hobby-card {
+        background: rgba(255,255,255,0.03);
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        transition: 0.3s;
+    }
+
+    .hobby-card:hover {
+        background: rgba(255,255,255,0.08);
+    }
+
+    .hobby-card i {
+        font-size: 1.5rem;
+        color: var(--accent);
+        margin-bottom: 10px;
+        transition: 0.4s;
+    }
+
+    .hobby-card:hover i {
+        transform: rotateY(180deg);
+    }
+
+    .hobby-card h4 {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+
+    .hobby-card p {
+        font-size: 0.75rem;
+        color: var(--text-sub);
+    }
+
+    .contact-btn {
+        display: block;
+        width: 100%;
+        padding: 18px;
+        background: transparent;
+        color: var(--accent);
+        border: 2px solid var(--accent);
+        text-align: center;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 12px;
+        margin-top: 30px;
+        transition: 0.3s;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .contact-btn:hover {
+        background: var(--accent);
+        color: var(--bg-color);
+        box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    /* scroll to top button */
+    .scroll-top {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        border: 1px solid #333;
+        background: #050505;
+        color: #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        z-index: 20;
+    }
+
+    .scroll-top.visible {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .scroll-top i {
+        font-size: 1rem;
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(18px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+</head>
+<body>
+<div class="container">
+
+    <header class="profile-header">
+        <div class="img-wrap">
+            <img src="profile.jpg" alt="Ved Mogili" class="profile-img">
+        </div>
+        <h1>Ved Mogili</h1>
+        <p class="tagline">
+            Developer <span style="color:var(--text-sub)">|</span> Athlete <span style="color:var(--text-sub)">|</span> Student
+        </p>
+
+<div class="hello-chip big-hello">
+    <span class="hello-dot"></span>
+    <span id="hello-text"></span>
+</div>
+
+    </header>
+
+    <div class="social-row">
+        <a href="https://www.linkedin.com/in/ved-mogili-879ba6395?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
+        <a href="https://twitter.com/viciousved" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com/_vedd0" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="mailto:vedmogili57@gmail.com" class="social-icon"><i class="fas fa-envelope"></i></a>
+    </div>
+
+    <!-- 01 Intro -->
+    <div class="card">
+        <div class="section-header">01 // The Intro</div>
+        <p>
+            I'm a 17-year-old First Year CS Student at <b>Malla Reddy University</b>.
+            Whether I'm debugging code or training for a marathon, I am driven by discipline.
+            I don't just participate; I compete to win.
+        </p>
+
+        <div class="stats-row">
+            <div class="stat-pill">
+                <span>3+</span>
+                Years Coding
+            </div>
+            <div class="stat-pill">
+                <span>7</span>
+                Marathons
+            </div>
+            <div class="stat-pill">
+                <span>11+</span>
+                Years Basketball
+            </div>
+        </div>
+    </div>
+
+    <!-- 02 Tech Stack -->
+    <div class="card" id="tech-card">
+        <div class="section-header">02 // Tech Stack</div>
+
+        <div class="skills-slider-list">
+
+            <div class="skill-slider" data-level="90">
+                <div class="skill-title">
+                    PYTHON
+                    <span class="skill-percent">0%</span>
+                </div>
+                <div class="slider-track">
+                    <div class="slider-fill"></div>
+                    <div class="slider-knob"></div>
+                </div>
+            </div>
+
+            <div class="skill-slider" data-level="88">
+                <div class="skill-title">
+                    AI &amp; ML USING PYTHON
+                    <span class="skill-percent">0%</span>
+                </div>
+                <div class="slider-track">
+                    <div class="slider-fill"></div>
+                    <div class="slider-knob"></div>
+                </div>
+            </div>
+
+            <div class="skill-slider" data-level="85">
+                <div class="skill-title">
+                    JAVASCRIPT
+                    <span class="skill-percent">0%</span>
+                </div>
+                <div class="slider-track">
+                    <div class="slider-fill"></div>
+                    <div class="slider-knob"></div>
+                </div>
+            </div>
+
+            <div class="skill-slider" data-level="82">
+                <div class="skill-title">
+                    DJANGO
+                    <span class="skill-percent">0%</span>
+                </div>
+                <div class="slider-track">
+                    <div class="slider-fill"></div>
+                    <div class="slider-knob"></div>
+                </div>
+            </div>
+
+            <div class="skill-slider" data-level="80">
+                <div class="skill-title">
+                    FLASK
+                    <span class="skill-percent">0%</span>
+                </div>
+                <div class="slider-track">
+                    <div class="slider-fill"></div>
+                    <div class="slider-knob"></div>
+                </div>
+            </div>
+
+            <div class="skill-slider" data-level="84">
+                <div class="skill-title">
+                    SQLITE
+                    <span class="skill-percent">0%</span>
+                </div>
+                <div class="slider-track">
+                    <div class="slider-fill"></div>
+                    <div class="slider-knob"></div>
+                </div>
+            </div>
+
+            <div class="skill-slider" data-level="92">
+                <div class="skill-title">
+                    IMAGE &amp; VIDEO EDITING
+                    <span class="skill-percent">0%</span>
+                </div>
+                <div class="slider-track">
+                    <div class="slider-fill"></div>
+                    <div class="slider-knob"></div>
+                </div>
+            </div>
+
+            <div class="skill-slider" data-level="90">
+                <div class="skill-title">
+                    SOCIAL MEDIA MARKETING
+                    <span class="skill-percent">0%</span>
+                </div>
+                <div class="slider-track">
+                    <div class="slider-fill"></div>
+                    <div class="slider-knob"></div>
+                </div>
+            </div>
+
+            <div class="skill-slider" data-level="88">
+                <div class="skill-title">
+                    WEB DEVELOPMENT
+                    <span class="skill-percent">0%</span>
+                </div>
+                <div class="slider-track">
+                    <div class="slider-fill"></div>
+                    <div class="slider-knob"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 03 More About Me -->
+    <div class="card">
+        <div class="section-header">03 // More About Me</div>
+        <p>
+            My obsession with tech started with a single laptop. I used to tweak every setting,
+            break things, reinstall everything and slowly learn how it all worked. That curiosity
+            moved into code — first simple scripts, then real projects that people actually used.
+            <br><br>
+            Now I'm focused on building products that look clean and feel smooth. I enjoy
+            designing <b>UI/UX</b>, editing <b>videos and images</b> that match a brand's vibe,
+            and using <b>social media marketing</b> to actually get attention on the things I build.
+        </p>
+    </div>
+
+    <!-- 04 Projects -->
+    <div class="card">
+        <div class="section-header">04 // Projects</div>
+
+        <div class="project">
+            <h3>OmniEats</h3>
+            <span>Healthy Food Delivery Platform</span>
+            <p>A specialized delivery app that sources raw, healthy ingredients directly from local vendors to ensure maximum freshness for health-conscious users.</p>
+        </div>
+
+        <div class="project">
+            <h3>Real-Time Chat Application</h3>
+            <span>Full-Stack Messaging Suite</span>
+            <p>A WhatsApp-inspired communication tool featuring secure text messaging, voice notes, and high-quality video calling capabilities.</p>
+        </div>
+
+        <div class="project">
+            <h3>Campus Canteen System</h3>
+            <span>Hackathon Team: "Wait a second"</span>
+            <p>Backend Lead for Codeathon 2025. Built a full ordering system to reduce queue times.</p>
+        </div>
+
+        <div class="project">
+            <h3>Project Nutri-AI</h3>
+            <span>EPICS Engineering Project</span>
+            <p>An AI concept for personalized health supplementation based on user data.</p>
+        </div>
+    </div>
+
+    <!-- 05 Stats & Interests -->
+    <div class="card">
+        <div class="section-header">05 // Stats & Interests</div>
+        <div class="hobby-grid">
+            <div class="hobby-card">
+                <i class="fas fa-basketball-ball"></i>
+                <h4>Basketball</h4>
+                <p>National Level (11 Yrs)</p>
+            </div>
+            <div class="hobby-card">
+                <i class="fas fa-running"></i>
+                <h4>Marathon</h4>
+                <p>7 Full Marathons</p>
+            </div>
+            <div class="hobby-card">
+                <i class="fas fa-music"></i>
+                <h4>Music</h4>
+                <p>Guitar &amp; Keyboard</p>
+            </div>
+            <div class="hobby-card">
+                <i class="fas fa-book"></i>
+                <h4>Books</h4>
+                <p>Professional Reader</p>
+            </div>
+        </div>
+    </div>
+
+    <a href="tel:+919396655561" class="contact-btn">
+        <i class="fas fa-phone"></i> &nbsp; CALL ME: +91 93966 55561
+    </a>
+
+</div>
+
+<!-- Scroll to top button -->
+<div class="scroll-top" id="scrollTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</div>
+
+
+   <script>
+    // Typewriter for "Hello, Ved here"
+    (function () {
+        const el = document.getElementById('hello-text');
+        if (!el) return;
+        const full = 'Hello, Ved here';
+        let i = 0;
+        el.textContent = '';
+        function type() {
+            if (i <= full.length) {
+                el.textContent = full.slice(0, i);
+                i++;
+                setTimeout(type, 90);
+            }
+        }
+        setTimeout(type, 300);
+    })();
+
+    // Animate tech stack sliders when in view (and re-run every time)
+    (function () {
+        const sliders = document.querySelectorAll('.skill-slider');
+
+        function resetSlider(slider) {
+            const fill = slider.querySelector('.slider-fill');
+            const knob = slider.querySelector('.slider-knob');
+            const label = slider.querySelector('.skill-percent');
+
+            fill.style.width = '0%';
+            knob.style.left = '0%';
+            knob.style.opacity = 0;
+            if (label) label.textContent = '0%';
+            slider.dataset.animated = 'false';
+        }
+
+        sliders.forEach(resetSlider);
+
+        function animateSlider(slider) {
+            const level = parseInt(slider.dataset.level, 10) || 0;
+            const fill = slider.querySelector('.slider-fill');
+            const knob = slider.querySelector('.slider-knob');
+            const label = slider.querySelector('.skill-percent');
+
+            let start = null;
+            const duration = 900;
+
+            function frame(timestamp) {
+                if (!start) start = timestamp;
+                const progress = Math.min((timestamp - start) / duration, 1);
+                const current = Math.floor(progress * level);
+
+                fill.style.width = current + '%';
+                knob.style.left = current + '%';
+                knob.style.opacity = 1;
+                if (label) label.textContent = current + '%';
+
+                if (progress < 1) {
+                    slider._animFrame = requestAnimationFrame(frame);
+                }
+            }
+
+            if (slider._animFrame) {
+                cancelAnimationFrame(slider._animFrame);
+            }
+            slider._animFrame = requestAnimationFrame(frame);
+        }
+
+        if (!('IntersectionObserver' in window)) {
+            // Fallback: just animate once
+            sliders.forEach(s => {
+                if (s.dataset.animated !== 'true') {
+                    animateSlider(s);
+                    s.dataset.animated = 'true';
+                }
+            });
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const slider = entry.target;
+                if (entry.isIntersecting) {
+                    // In view: animate if not already animating from this entry
+                    if (slider.dataset.animated !== 'true') {
+                        animateSlider(slider);
+                        slider.dataset.animated = 'true';
+                    }
+                } else {
+                    // Out of view: reset so it can replay next time
+                    resetSlider(slider);
+                }
+            });
+        }, { threshold: 0.4 });
+
+        sliders.forEach(slider => observer.observe(slider));
+    })();
+
+    // Card tilt effect
+    (function () {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const rotateY = ((x / rect.width) - 0.5) * 6;
+                const rotateX = -((y / rect.height) - 0.5) * 6;
+                card.style.transform = `translateY(-4px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+    })();
+
+    // Scroll to top button
+    (function () {
+        const btn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+        btn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    })();
+</script>
+
+
+
+</body>
+</html>
